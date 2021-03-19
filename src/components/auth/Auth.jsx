@@ -28,7 +28,6 @@ const Auth = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(initialState);
-    const [dataValid, setDataValid] = useState(true);
     const [snackOpen, setSnackOpen] = useState({
         open: false,
         severity: "",
@@ -44,10 +43,14 @@ const Auth = () => {
 
         if (isSignUp) {
             if (formData.password !== formData.confirmPassword) {
-                setDataValid(false);
+                setSnackOpen({
+                    open: true,
+                    severity: "warning",
+                    message:
+                        "Looks like your passwords do not match. Please try again.",
+                });
                 return;
             } else {
-                setDataValid(true);
                 auth.createUserWithEmailAndPassword(
                     formData.email,
                     formData.password
@@ -79,16 +82,6 @@ const Auth = () => {
                         message: err.message,
                     });
                 });
-        }
-
-        if (!dataValid) {
-            setSnackOpen({
-                open: true,
-                severity: "warning",
-                message:
-                    "Looks like your passwords are not matching. Please try again!!",
-            });
-            return;
         }
     };
 

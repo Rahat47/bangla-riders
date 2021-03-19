@@ -6,6 +6,6 @@ body {
 }
 
 .active {
-    color: crimson !important;
-    mix-blend-mode: hue;
+    color: inherit !important;
+    mix-blend-mode: difference;
 }
