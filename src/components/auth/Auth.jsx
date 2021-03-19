@@ -10,6 +10,7 @@ import { LockOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
 import useStyles from "./styles";
 import Input from "./Input";
+import FirebaseAuthProvider from "./authManager/FirebaseAuthProvider";
 const initialState = {
     firstName: "",
     lastName: "",
@@ -29,9 +30,9 @@ const Auth = () => {
         e.preventDefault();
 
         if (isSignUp) {
-            // sign up here
+            console.log(formData);
         } else {
-            //log in here
+            console.log(formData);
         }
     };
 
@@ -113,6 +114,7 @@ const Auth = () => {
                     >
                         {isSignUp ? "Sign Up" : "Sign In"}
                     </Button>
+                    <FirebaseAuthProvider />
 
                     <Grid container justify="flex-end">
                         <Grid item>

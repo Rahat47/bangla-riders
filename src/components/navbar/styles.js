@@ -21,12 +21,14 @@ export default makeStyles({
     toolbar: {
         display: 'flex',
         justifyContent: 'flex-end',
-        width: '400px',
+        width: '650px',
     },
     userName: {
-        display: 'flex',
-        alignItems: 'center',
+        color: "black"
     },
+    authBtn: {
+        marginLeft: "15px"
+    }
 
 
 });
