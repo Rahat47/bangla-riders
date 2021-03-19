@@ -6,6 +6,8 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { fetchData } from "../../API";
+import Cards from "../card/Cards";
+import useStyles from "./styles";
 
 const Home = () => {
     const [rideData, setRideData] = useState([]);
@@ -13,8 +15,7 @@ const Home = () => {
     useEffect(() => {
         async function getData() {
             try {
-                const data = await fetchData();
-                setRideData(data);
+                setRideData(await fetchData());
             } catch (error) {
                 console.log(error);
             }
@@ -22,22 +23,25 @@ const Home = () => {
         getData();
     }, []);
 
+    const classes = useStyles();
+
     return (
-        <Container>
+        <Container className={classes.container}>
+            <div className={classes.header}>
+                <Typography variant="h2" gutterBottom>
+                    Welcome to Bangla Riders
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                    Find your favourite rides here.
+                </Typography>
+            </div>
             {!rideData ? (
-                <CircularProgress />
+                <CircularProgress color="secondary" size={85} />
             ) : (
-                <Grid
-                    container
-                    justify="space-between"
-                    alignItems="stretch"
-                    spacing={3}
-                >
-                    <Grid item xs={12} sm={4}>
-                        <Typography variant="h1">
-                            {rideData.map(data => data.mode)}
-                        </Typography>
-                    </Grid>
+                <Grid container alignItems="stretch" spacing={4}>
+                    {rideData.map(data => (
+                        <Cards key={data.id} data={data} />
+                    ))}
                 </Grid>
             )}
         </Container>

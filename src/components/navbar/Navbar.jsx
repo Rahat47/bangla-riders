@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
 import { DirectionsBike } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import useStyles from "./styles";
 
 const Navbar = () => {
@@ -20,7 +20,7 @@ const Navbar = () => {
             </Typography>
             <Toolbar className={classes.toolbar}>
                 <Typography
-                    component={Link}
+                    component={NavLink}
                     to="/"
                     className={classes.link}
                     variant="h6"
@@ -29,8 +29,8 @@ const Navbar = () => {
                     Home
                 </Typography>
                 <Typography
-                    component={Link}
-                    to="/"
+                    component={NavLink}
+                    to="/destination"
                     className={classes.link}
                     variant="h6"
                     align="center"
@@ -38,8 +38,8 @@ const Navbar = () => {
                     Destination
                 </Typography>
                 <Typography
-                    component={Link}
-                    to="/"
+                    component={NavLink}
+                    to="/blog"
                     className={classes.link}
                     variant="h6"
                     align="center"

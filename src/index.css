@@ -4,3 +4,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.active {
+    color: #7c01f5 !important;
+}
