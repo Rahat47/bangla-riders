@@ -4,13 +4,18 @@ import {
     Container,
     Grid,
     Paper,
+    Snackbar,
     Typography,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import { LockOutlined } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useStyles from "./styles";
 import Input from "./Input";
+import { auth } from "../../firebase";
 import FirebaseAuthProvider from "./authManager/FirebaseAuthProvider";
+import { UserContext } from "../../App";
+import { useHistory } from "react-router";
 const initialState = {
     firstName: "",
     lastName: "",
@@ -23,6 +28,14 @@ const Auth = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(initialState);
+    const [dataValid, setDataValid] = useState(true);
+    const [snackOpen, setSnackOpen] = useState({
+        open: false,
+        severity: "",
+        message: "",
+    });
+    const history = useHistory();
+    const [, setLoggedInUser] = useContext(UserContext);
     const classes = useStyles();
 
     //Functions
@@ -30,9 +43,52 @@ const Auth = () => {
         e.preventDefault();
 
         if (isSignUp) {
-            console.log(formData);
+            if (formData.password !== formData.confirmPassword) {
+                setDataValid(false);
+                return;
+            } else {
+                setDataValid(true);
+                auth.createUserWithEmailAndPassword(
+                    formData.email,
+                    formData.password
+                )
+                    .then(result => {
+                        setLoggedInUser(result.user);
+                        history.push("/");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        setSnackOpen({
+                            open: true,
+                            severity: "error",
+                            message: err.message,
+                        });
+                    });
+            }
         } else {
-            console.log(formData);
+            auth.signInWithEmailAndPassword(formData.email, formData.password)
+                .then(result => {
+                    setLoggedInUser(result.user);
+                    history.push("/");
+                })
+                .catch(err => {
+                    console.log(err);
+                    setSnackOpen({
+                        open: true,
+                        severity: "error",
+                        message: err.message,
+                    });
+                });
+        }
+
+        if (!dataValid) {
+            setSnackOpen({
+                open: true,
+                severity: "warning",
+                message:
+                    "Looks like your passwords are not matching. Please try again!!",
+            });
+            return;
         }
     };
 
@@ -49,8 +105,33 @@ const Auth = () => {
         setShowPassword(prevShowPassword => !prevShowPassword);
     };
 
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setSnackOpen({
+            open: false,
+            severity: "",
+            message: "",
+        });
+    };
+
     return (
         <Container component="main" maxWidth="xs">
+            <Snackbar
+                open={snackOpen.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert onClose={handleClose} severity={snackOpen.severity}>
+                    {snackOpen.message}
+                </Alert>
+            </Snackbar>
             <Paper elevation={3} className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlined />
@@ -114,7 +195,12 @@ const Auth = () => {
                     >
                         {isSignUp ? "Sign Up" : "Sign In"}
                     </Button>
-                    <FirebaseAuthProvider />
+                    <FirebaseAuthProvider
+                        snackOpen={snackOpen}
+                        setSnackOpen={setSnackOpen}
+                        handleClose={handleClose}
+                        Alert={Alert}
+                    />
 
                     <Grid container justify="flex-end">
                         <Grid item>

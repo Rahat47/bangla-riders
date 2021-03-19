@@ -14,7 +14,7 @@ const Input = ({
         <Grid sm={half ? 6 : 12} item xs={12}>
             <TextField
                 name={name}
-                onChange={handleChange}
+                onBlur={handleChange}
                 variant="outlined"
                 required
                 type={type}

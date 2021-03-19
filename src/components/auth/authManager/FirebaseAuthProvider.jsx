@@ -1,11 +1,17 @@
-import { Button } from "@material-ui/core";
+import { Button, Snackbar } from "@material-ui/core";
 import React, { useContext } from "react";
 import useStyles from "../styles";
 import { UserContext } from "../../../App";
 import { useHistory } from "react-router";
 import firebase, { auth } from "../../../firebase";
 
-const FirebaseAuthProvider = () => {
+const FirebaseAuthProvider = ({
+    setSnackOpen,
+    snackOpen,
+    handleClose,
+    Alert,
+}) => {
+    // eslint-disable-next-line no-unused-vars
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const history = useHistory();
     const classes = useStyles();
@@ -19,10 +25,15 @@ const FirebaseAuthProvider = () => {
             })
             .catch(err => {
                 console.log(err);
+                setSnackOpen({
+                    open: true,
+                    severity: "error",
+                    message: err.message,
+                });
             });
     }
     function handleFacebookAuth() {
-        var facebookProvider = new firebase.auth.FacebookAuthProvider();
+        const facebookProvider = new firebase.auth.FacebookAuthProvider();
         auth.signInWithPopup(facebookProvider)
             .then(result => {
                 setLoggedInUser(result.user);
@@ -30,12 +41,43 @@ const FirebaseAuthProvider = () => {
             })
             .catch(err => {
                 console.log(err);
+                setSnackOpen({
+                    open: true,
+                    severity: "error",
+                    message: err.message,
+                });
             });
     }
-    function handleGithubAuth() {}
+    function handleGithubAuth() {
+        const githubProvider = new firebase.auth.GithubAuthProvider();
+        auth.signInWithPopup(githubProvider)
+            .then(result => {
+                setLoggedInUser(result.user);
+                history.push("/");
+            })
+            .catch(err => {
+                console.log(err);
+                setSnackOpen({
+                    open: true,
+                    severity: "error",
+                    message: err.message,
+                });
+            });
+    }
 
     return (
         <>
+            <Snackbar
+                open={snackOpen.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert onClose={handleClose} severity={snackOpen.severity}>
+                    {snackOpen.message}
+                </Alert>
+            </Snackbar>
+
             <Button
                 variant="outlined"
                 fullWidth
@@ -57,7 +99,6 @@ const FirebaseAuthProvider = () => {
             </Button>
 
             <Button
-                type="submit"
                 variant="outlined"
                 fullWidth
                 color="secondary"

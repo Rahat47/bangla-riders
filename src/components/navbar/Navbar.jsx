@@ -15,7 +15,11 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar className={classes.appBar} position="static" color="secondary">
+        <AppBar
+            className={classes.appBar}
+            position="static"
+            color={loggedInUser ? "primary" : "secondary"}
+        >
             <Typography
                 component={Link}
                 to="/"
@@ -60,7 +64,7 @@ const Navbar = () => {
                         variant="h6"
                         align="center"
                     >
-                        {loggedInUser.displayName}
+                        {loggedInUser.displayName || loggedInUser.email}
                     </Typography>
                 )}
                 {loggedInUser ? (
