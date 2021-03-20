@@ -55,8 +55,24 @@ const Auth = () => {
                     formData.email,
                     formData.password
                 )
+
                     .then(result => {
-                        setLoggedInUser(result.user);
+                        async function manageUser() {
+                            try {
+                                await result.user.updateProfile({
+                                    displayName: `${formData.firstName} ${formData.lastName}`,
+                                });
+                                await result.user.sendEmailVerification();
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                        manageUser();
+                        const updatedUser = auth.currentUser;
+                        return updatedUser;
+                    })
+                    .then(updatedUser => {
+                        setLoggedInUser(updatedUser);
                         history.push("/");
                     })
                     .catch(err => {

@@ -32,7 +32,7 @@ const Navbar = () => {
             </Typography>
             <Toolbar className={classes.toolbar}>
                 <Typography
-                    component={NavLink}
+                    component={Link}
                     to="/"
                     className={classes.link}
                     variant="h6"
@@ -64,7 +64,7 @@ const Navbar = () => {
                         variant="h6"
                         align="center"
                     >
-                        {loggedInUser.displayName || loggedInUser.email}
+                        {loggedInUser.displayName}
                     </Typography>
                 )}
                 {loggedInUser ? (

@@ -20,7 +20,7 @@ const Cards = ({ data }) => {
                         className={classes.cardLink}
                         variant="body2"
                         component={Link}
-                        to={`/ride/${data.mode}`}
+                        to={`/destination/${data.mode}`}
                     >
                         {data.mode}
                     </Typography>
