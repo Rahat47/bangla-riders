@@ -3,13 +3,29 @@ import React, { useState } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 
 const MapComponent = () => {
+    const [position, setPosition] = useState({
+        latitude: "",
+        longitude: "",
+    });
+
     const [viewport, setViewport] = useState({
         width: 400,
         height: 400,
-        latitude: 23.891149,
-        longitude: 90.472448,
+        latitude: position.latitude || 23.891149,
+        longitude: position.longitude || 90.472448,
         zoom: 10,
     });
+
+    function getLocation() {
+        navigator.geolocation.getCurrentPosition(position => {
+            setPosition({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            });
+        });
+    }
+    getLocation();
+
     return (
         <ReactMapGL
             {...viewport}
@@ -19,10 +35,8 @@ const MapComponent = () => {
             onViewportChange={viewport => setViewport(viewport)}
         >
             <Marker
-                latitude={23.810651}
-                longitude={90.4126466}
-                offsetLeft={-20}
-                offsetTop={-10}
+                latitude={position.latitude || viewport.latitude}
+                longitude={position.longitude || viewport.longitude}
             >
                 <Room fontSize="large" /> You are here.
             </Marker>

@@ -21,6 +21,7 @@ const FirebaseAuthProvider = ({
         auth.signInWithPopup(googleProvider)
             .then(result => {
                 setLoggedInUser(result.user);
+                localStorage.setItem("loggedIn", JSON.stringify(result.user));
                 history.push("/");
             })
             .catch(err => {
@@ -37,6 +38,7 @@ const FirebaseAuthProvider = ({
         auth.signInWithPopup(facebookProvider)
             .then(result => {
                 setLoggedInUser(result.user);
+                localStorage.setItem("loggedIn", JSON.stringify(result.user));
                 history.push("/");
             })
             .catch(err => {
@@ -53,6 +55,7 @@ const FirebaseAuthProvider = ({
         auth.signInWithPopup(githubProvider)
             .then(result => {
                 setLoggedInUser(result.user);
+                localStorage.setItem("loggedIn", JSON.stringify(result.user));
                 history.push("/");
             })
             .catch(err => {

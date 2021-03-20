@@ -1,27 +1,18 @@
-import {
-    CardContent,
-    Container,
-    Grid,
-    Paper,
-    Typography,
-} from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import React from "react";
+import { useParams } from "react-router";
 import MapComponent from "../map/MapComponent";
+import RideCard from "../rideCard/RideCard";
 import useStyles from "./styles";
 
 const Destination = () => {
+    const { mode } = useParams();
     const classes = useStyles();
     return (
         <Container>
-            <Grid container>
+            <Grid container spacing={4}>
                 <Grid item xs={12} sm={4}>
-                    <Paper>
-                        <CardContent>
-                            <Typography variant="h4">
-                                Hello from left side
-                            </Typography>
-                        </CardContent>
-                    </Paper>
+                    <RideCard mode={mode} />
                 </Grid>
                 <Grid item xs={12} sm={8} className={classes.map}>
                     <MapComponent />

@@ -2,33 +2,42 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 export default makeStyles({
-    appBar: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '10px 50px',
-    },
-    heading: {
-        color: 'black',
-        textDecoration: 'none',
-    },
-    link: {
-        marginRight: '20px',
-        textDecoration: "none",
-        color: "white"
-    },
     toolbar: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        width: '650px',
+        display: "flex",
+        justifyContent: "space-between",
+
     },
     userName: {
-        color: "black"
+        color: "inherit"
     },
     authBtn: {
         marginLeft: "15px"
-    }
+    },
+    header: {
+        position: "static",
+        backgroundColor: "#400CCC",
+        paddingRight: "79px",
+        paddingLeft: "118px",
+        "@media (max-width: 900px)": {
+            paddingLeft: 0,
+        },
+    },
+    logo: {
+        fontFamily: "Work Sans, sans-serif",
+        fontWeight: 600,
+        color: "#FFFEFE",
+        textAlign: "left",
+        textDecoration: "none"
+    },
+    menuButton: {
+        fontFamily: "Open Sans, sans-serif",
+        fontWeight: 700,
+        size: "18px",
+        marginLeft: "38px",
+    },
+    drawerContainer: {
+        padding: "20px 30px",
+    },
 
 
 });

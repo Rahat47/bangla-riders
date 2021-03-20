@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "../../API";
 import Cards from "../card/Cards";
 import useStyles from "./styles";
-
 const Home = () => {
     const [rideData, setRideData] = useState([]);
 

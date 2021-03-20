@@ -73,6 +73,10 @@ const Auth = () => {
                     })
                     .then(updatedUser => {
                         setLoggedInUser(updatedUser);
+                        localStorage.setItem(
+                            "loggedIn",
+                            JSON.stringify(updatedUser)
+                        );
                         history.push("/");
                     })
                     .catch(err => {
@@ -88,6 +92,10 @@ const Auth = () => {
             auth.signInWithEmailAndPassword(formData.email, formData.password)
                 .then(result => {
                     setLoggedInUser(result.user);
+                    localStorage.setItem(
+                        "loggedIn",
+                        JSON.stringify(result.user)
+                    );
                     history.push("/");
                 })
                 .catch(err => {
@@ -124,8 +132,6 @@ const Auth = () => {
         }
         setSnackOpen({
             open: false,
-            severity: "",
-            message: "",
         });
     };
 
