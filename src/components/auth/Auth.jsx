@@ -16,6 +16,7 @@ import { auth } from "../../firebase";
 import FirebaseAuthProvider from "./authManager/FirebaseAuthProvider";
 import { UserContext } from "../../App";
 import { useHistory } from "react-router";
+//Initial State Of The Form
 const initialState = {
     firstName: "",
     lastName: "",
@@ -26,23 +27,31 @@ const initialState = {
 
 const Auth = () => {
     const [isSignUp, setIsSignUp] = useState(false);
+
     const [showPassword, setShowPassword] = useState(false);
+
     const [formData, setFormData] = useState(initialState);
+
     const [snackOpen, setSnackOpen] = useState({
         open: false,
         severity: "",
         message: "",
     });
+
     const history = useHistory();
     const [, setLoggedInUser] = useContext(UserContext);
     const classes = useStyles();
 
     //Functions
     const handleSubmit = e => {
-        e.preventDefault();
+        const regex = /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/g;
 
+        e.preventDefault();
         if (isSignUp) {
-            if (formData.password !== formData.confirmPassword) {
+            if (
+                formData.password !== formData.confirmPassword &&
+                regex.test(formData.password)
+            ) {
                 setSnackOpen({
                     open: true,
                     severity: "warning",

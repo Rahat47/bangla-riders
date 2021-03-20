@@ -4,6 +4,8 @@ import Auth from "./components/auth/Auth";
 import { createContext, useState } from "react";
 import Destination from "./components/destination/Destination";
 import Navbar from "./components/navbar/Navbar";
+import Profile from './components/profile/Profile';
+import Error from './components/error/Error';
 export const UserContext = createContext()
 
 function App() {
@@ -21,13 +23,22 @@ function App() {
           <Route exact path="/auth">
             <Auth />
           </Route>
+
           <Route exact path={"/destination/:mode"} >
             {loggedInUser ? <Destination /> : <Redirect to="/auth" />}
           </Route>
+
           <Route exact path={"/destination/"} >
             {loggedInUser ? <Destination /> : <Redirect to="/auth" />}
           </Route>
 
+          <Route exact path={"/profile"}>
+            <Profile />
+          </Route>
+
+          <Route path="*">
+            <Error />
+          </Route>
 
         </Switch>
       </Router >

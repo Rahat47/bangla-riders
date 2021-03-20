@@ -189,7 +189,7 @@ export default function Navbar() {
                         to="/profile"
                         color="inherit"
                     >
-                        {loggedInUser.displayName}
+                        {loggedInUser.displayName || loggedInUser.email}
                     </Button>
                 )}
 
