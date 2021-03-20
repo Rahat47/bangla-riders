@@ -9,7 +9,7 @@ const Destination = () => {
     const { mode } = useParams();
     const classes = useStyles();
     return (
-        <Container>
+        <Container style={{ margin: "40px auto" }}>
             <Grid container spacing={4}>
                 <Grid item xs={12} sm={4}>
                     <RideCard mode={mode} />
