@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'https://api.jsonbin.io/b/605446d27ea6546cf3e29258/1'
+const url = 'https://api.jsonbin.io/b/605742727ffeba41c07f46ea'
 
 export const fetchData = async () => {
     try {
