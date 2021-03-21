@@ -13,6 +13,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect, useContext } from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { UserContext } from "../../App";
+import { auth } from "../../firebase";
+
 import useStyles from "./styles";
 
 export default function Navbar() {
@@ -36,9 +38,15 @@ export default function Navbar() {
 
     const { mobileView, drawerOpen } = state;
     const logout = () => {
-        setLoggedInUser(null);
-        localStorage.clear();
-        history.push("/");
+        auth.signOut()
+            .then(() => {
+                setLoggedInUser(null);
+                localStorage.clear();
+                history.push("/");
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     useEffect(() => {
