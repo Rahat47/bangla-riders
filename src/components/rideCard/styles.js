@@ -12,6 +12,9 @@ export default makeStyles(theme => ({
         alignItems: 'center',
 
     },
+    btn: {
+        marginTop: theme.spacing(2)
+    },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.primary.main,
@@ -28,10 +31,8 @@ export default makeStyles(theme => ({
         borderRadius: "5px"
     },
     dataTable: {
-
         width: "100%",
         marginTop: "10px",
-
     }
 
 }))

@@ -189,6 +189,7 @@ const RideCard = ({ mode }) => {
                             variant="contained"
                             color="primary"
                             fullWidth
+                            className={classes.btn}
                         >
                             Search
                         </Button>

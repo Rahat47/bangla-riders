@@ -4,8 +4,3 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
-
-.active {
-    color: inherit !important;
-    mix-blend-mode: difference;
-}
