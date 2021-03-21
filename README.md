@@ -32,10 +32,6 @@ I am a full stack web developer. you can find my works in this github repo.
 
 ### Find Me.
 
-Find me on: [Facebook](https://www.facebook.com/rayhanhossain.rahat.5/)
-Find me on: [Github](https://github.com/Rahat47)
-Find me on: [Twitter](https://twitter.com/RayhanH06640052)
-Find me on: [LinkedIn](https://www.linkedin.com/in/rh-rahat/)
-Find me on: [Fiverr](https://www.fiverr.com/rh_rahat_47?up_rollout=true)
+Find me on: [Facebook](https://www.facebook.com/rayhanhossain.rahat.5/), [Github](https://github.com/Rahat47), [Twitter](https://twitter.com/RayhanH06640052), [LinkedIn](https://www.linkedin.com/in/rh-rahat/), [Fiverr](https://www.fiverr.com/rh_rahat_47?up_rollout=true)
 
 # Have a good day. `:)`

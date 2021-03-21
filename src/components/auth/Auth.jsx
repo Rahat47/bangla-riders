@@ -24,34 +24,27 @@ const initialState = {
     password: "",
     confirmPassword: "",
 };
-
 const Auth = () => {
     const [isSignUp, setIsSignUp] = useState(false);
-
     const [showPassword, setShowPassword] = useState(false);
-
     const [formData, setFormData] = useState(initialState);
-
     const [snackOpen, setSnackOpen] = useState({
         open: false,
         severity: "",
         message: "",
     });
-
     const history = useHistory();
     const [, setLoggedInUser] = useContext(UserContext);
     const classes = useStyles();
-
     //Functions
     const handleSubmit = e => {
         const regex = /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/g;
 
+        const strongPassword = regex.test(formData.password);
         e.preventDefault();
+
         if (isSignUp) {
-            if (
-                formData.password !== formData.confirmPassword &&
-                regex.test(formData.password)
-            ) {
+            if (formData.password !== formData.confirmPassword) {
                 setSnackOpen({
                     open: true,
                     severity: "warning",
@@ -59,44 +52,52 @@ const Auth = () => {
                         "Looks like your passwords do not match. Please try again.",
                 });
                 return;
-            } else {
-                auth.createUserWithEmailAndPassword(
-                    formData.email,
-                    formData.password
-                )
-
-                    .then(result => {
-                        async function manageUser() {
-                            try {
-                                await result.user.updateProfile({
-                                    displayName: `${formData.firstName} ${formData.lastName}`,
-                                });
-                                await result.user.sendEmailVerification();
-                            } catch (error) {
-                                console.log(error);
-                            }
-                        }
-                        manageUser();
-                        const updatedUser = auth.currentUser;
-                        return updatedUser;
-                    })
-                    .then(updatedUser => {
-                        setLoggedInUser(updatedUser);
-                        localStorage.setItem(
-                            "loggedIn",
-                            JSON.stringify(updatedUser)
-                        );
-                        history.push("/");
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        setSnackOpen({
-                            open: true,
-                            severity: "error",
-                            message: err.message,
-                        });
-                    });
             }
+            if (!strongPassword) {
+                setSnackOpen({
+                    open: true,
+                    severity: "warning",
+                    message:
+                        "Your Password must contain, One Uppercase, One Lowercase, One Number and One Special Character, and Must be at least 8 Characters Long.",
+                });
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(
+                formData.email,
+                formData.password
+            )
+                .then(result => {
+                    async function manageUser() {
+                        try {
+                            await result.user.updateProfile({
+                                displayName: `${formData.firstName} ${formData.lastName}`,
+                            });
+                            await result.user.sendEmailVerification();
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                    manageUser();
+                    const updatedUser = auth.currentUser;
+                    return updatedUser;
+                })
+                .then(updatedUser => {
+                    setLoggedInUser(updatedUser);
+                    localStorage.setItem(
+                        "loggedIn",
+                        JSON.stringify(updatedUser)
+                    );
+                    history.push("/");
+                })
+                .catch(err => {
+                    console.log(err);
+                    setSnackOpen({
+                        open: true,
+                        severity: "error",
+                        message: err.message,
+                    });
+                });
         } else {
             auth.signInWithEmailAndPassword(formData.email, formData.password)
                 .then(result => {
@@ -122,19 +123,15 @@ const Auth = () => {
         setIsSignUp(prevSwitchMode => !prevSwitchMode);
         setShowPassword(false);
     };
-
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
     const handleShowPassword = () => {
         setShowPassword(prevShowPassword => !prevShowPassword);
     };
-
     function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
-
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
@@ -143,12 +140,11 @@ const Auth = () => {
             open: false,
         });
     };
-
     return (
         <Container component="main" maxWidth="xs">
             <Snackbar
                 open={snackOpen.open}
-                autoHideDuration={6000}
+                autoHideDuration={8000}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
