@@ -14,9 +14,7 @@ This app has a fully functional Authentication system with The Help Of Firebase.
 
 A Basic Map Intregated with [Pigeon Maps](https://pigeon-maps.js.org/)
 
-Some Simple Validation Check.
-
-and An Email validation System
+Some Simple Validation Checks (Regex for strong password).
 
 ### How to use.?
 
@@ -28,7 +26,7 @@ Edit the `src` folder to update your content.
 
 ## About Me
 
-I am a full stack web developer. you can find my works in this github repo.
+I am a full stack web developer. you can find my works in my [github](https://github.com/Rahat47?tab=repositories) repo.
 
 ### Find Me.
 
